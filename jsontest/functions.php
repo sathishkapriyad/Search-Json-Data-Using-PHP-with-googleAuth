@@ -49,11 +49,10 @@ function getOrganizationData($search, $organizations, $tickets, $users) {
             }
         }
     } catch (Exception $e) {
-        return "No Data found";
-        
+        return renderNoDataFound();
     } 
     // return "<pre> heelo";
-    return renderHTML($organizationsLists);
+    return count($organizationsLists) > 0 ? renderHTML($organizationsLists) : renderNoDataFound();
 }
 
 // Function for get users with assigned ticket & submitted ticket
@@ -88,10 +87,10 @@ function getUsers($search, $organizations, $tickets, $users) {
             }
         }
     } catch (Exception $e) {
-        return "No Data found";
+        return renderNoDataFound();
     } 
     // return "<pre> heelo";
-    return renderUserHTML($usersLists);
+    return count($usersLists) > 0 ? renderUserHTML($usersLists) : renderNoDataFound();
 }
 
 function getTickets($search, $organizations, $tickets, $users) {
@@ -125,10 +124,10 @@ function getTickets($search, $organizations, $tickets, $users) {
             }
         }
     } catch (Exception $e) {
-        return "No Data found";
+        return renderNoDataFound();
     } 
     // return "<pre> heelo";
-    return renderTicketHTML($usersLists);
+    return count($usersLists) > 0 ? renderTicketHTML($usersLists) : renderNoDataFound();
 }
 
 function renderHTML($lists) {
@@ -185,4 +184,10 @@ function renderTicketHTML($lists) {
                 </div>";
     }
     return $html;
+}
+
+function renderNoDataFound() {
+    return "<div class='alert alert-info mb-2 mt-2' role='alert'>
+        No data found.
+  </div>";
 }
